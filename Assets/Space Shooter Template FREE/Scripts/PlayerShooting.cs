@@ -47,7 +47,7 @@ public class PlayerShooting : MonoBehaviour {
     private void Update()
     {
 
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") || Input.GetKey(KeyCode.Space))
         {
             if (Time.time > nextFire)
             {

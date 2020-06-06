@@ -14,13 +14,14 @@ public class Borders
     [HideInInspector] public float minX, maxX, minY, maxY;
 }
 
-public class PlayerMoving : MonoBehaviour {
+public class PlayerMoving : MonoBehaviour
+{
 
     [Tooltip("offset from viewport borders for player's movement")]
     public Borders borders;
     Camera mainCamera;
-    bool controlIsActive = true; 
-
+    bool controlIsActive = true;
+    public int speed = 10;
     public static PlayerMoving instance; //unique instance of the script for easy access to the script
 
     private void Awake()
@@ -40,8 +41,22 @@ public class PlayerMoving : MonoBehaviour {
         if (controlIsActive)
         {
 #if UNITY_STANDALONE || UNITY_EDITOR    //if the current platform is not mobile, set pc settings
-
-          //TODO Put user controls here
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Translate(x: -speed * Time.deltaTime, y: 0, z: 0);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                transform.Translate(x: speed * Time.deltaTime, y: 0, z: 0);
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                transform.Translate(x: 0, y: -speed * Time.deltaTime, z: 0);
+            }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                transform.Translate(x: 0, y: speed * Time.deltaTime, z: 0);
+            }
 #endif
 
 #if UNITY_IOS || UNITY_ANDROID //if current platform is mobile, 
@@ -64,7 +79,7 @@ public class PlayerMoving : MonoBehaviour {
     }
 
     //setting 'Player's' movement borders according to Viewport size and defined offset
-    void ResizeBorders() 
+    void ResizeBorders()
     {
         borders.minX = mainCamera.ViewportToWorldPoint(Vector2.zero).x + borders.minXOffset;
         borders.minY = mainCamera.ViewportToWorldPoint(Vector2.zero).y + borders.minYOffset;
