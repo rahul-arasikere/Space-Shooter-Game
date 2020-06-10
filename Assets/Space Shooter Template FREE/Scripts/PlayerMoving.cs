@@ -45,15 +45,15 @@ public class PlayerMoving : MonoBehaviour
             {
                 transform.Translate(x: -speed * Time.deltaTime, y: 0, z: 0);
             }
-            else if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D))
             {
                 transform.Translate(x: speed * Time.deltaTime, y: 0, z: 0);
             }
-            else if (Input.GetKey(KeyCode.S))
+            if (Input.GetKey(KeyCode.S))
             {
                 transform.Translate(x: 0, y: -speed * Time.deltaTime, z: 0);
             }
-            else if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 transform.Translate(x: 0, y: speed * Time.deltaTime, z: 0);
             }
