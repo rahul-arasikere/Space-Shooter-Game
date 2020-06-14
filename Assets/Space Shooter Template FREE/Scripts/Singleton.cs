@@ -13,7 +13,8 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     /// <summary>
     ///     Returns whether the instance has been initialized or not.
     /// </summary>
-    public static bool IsInitialized {
+    public static bool IsInitialized
+    {
         get { return Instance != null; }
     }
 

@@ -69,9 +69,22 @@ public class PlayerMoving : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, touchPosition, 30 * Time.deltaTime);
             }
 #endif
+            float x;
+            if (transform.position.x > (borders.maxX + borders.maxXOffset))
+            {
+                x = borders.minX;
+            }
+            else if (transform.position.x < (borders.minX + borders.minXOffset))
+            {
+                x = borders.maxX;
+            }
+            else
+            {
+                x = transform.position.x;
+            }
             transform.position = new Vector3    //if 'Player' crossed the movement borders, returning him back 
                 (
-                Mathf.Clamp(transform.position.x, borders.minX, borders.maxX),
+                x,
                 Mathf.Clamp(transform.position.y, borders.minY, borders.maxY),
                 0
                 );

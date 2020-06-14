@@ -10,7 +10,7 @@ using System;
 [System.Serializable]
 public class Shooting
 {
-    [Range(0,100)]
+    [Range(0, 100)]
     [Tooltip("probability with which the ship of this wave will make a shot")]
     public int shotChance;
 
@@ -18,7 +18,8 @@ public class Shooting
     public float shotTimeMin, shotTimeMax;
 }
 
-public class Wave : MonoBehaviour {
+public class Wave : MonoBehaviour
+{
 
     #region FIELDS
     [Tooltip("Enemy's prefab")]
@@ -52,27 +53,27 @@ public class Wave : MonoBehaviour {
 
     private void Start()
     {
-        StartCoroutine(CreateEnemyWave()); 
+        StartCoroutine(CreateEnemyWave());
     }
 
     IEnumerator CreateEnemyWave() //depending on chosed parameters generating enemies and defining their parameters
     {
-        for (int i = 0; i < count; i++) 
+        for (int i = 0; i < count; i++)
         {
             GameObject newEnemy;
             newEnemy = Instantiate(enemy, enemy.transform.position, Quaternion.identity);
-            FollowThePath followComponent = newEnemy.GetComponent<FollowThePath>(); 
-            followComponent.path = pathPoints;         
-            followComponent.speed = speed;        
+            FollowThePath followComponent = newEnemy.GetComponent<FollowThePath>();
+            followComponent.path = pathPoints;
+            followComponent.speed = speed;
             followComponent.rotationByPath = rotationByPath;
             followComponent.loop = Loop;
-            followComponent.SetPath(); 
-            Enemy enemyComponent = newEnemy.GetComponent<Enemy>();  
-            enemyComponent.shotChance = shooting.shotChance; 
-            enemyComponent.shotTimeMin = shooting.shotTimeMin; 
+            followComponent.SetPath();
+            Enemy enemyComponent = newEnemy.GetComponent<Enemy>();
+            enemyComponent.shotChance = shooting.shotChance;
+            enemyComponent.shotTimeMin = shooting.shotTimeMin;
             enemyComponent.shotTimeMax = shooting.shotTimeMax;
-            newEnemy.SetActive(true);      
-            yield return new WaitForSeconds(timeBetween); 
+            newEnemy.SetActive(true);
+            yield return new WaitForSeconds(timeBetween);
         }
         if (testMode)       //if testMode is activated, waiting for 3 sec and re-generating the wave
         {
@@ -80,12 +81,12 @@ public class Wave : MonoBehaviour {
             StartCoroutine(CreateEnemyWave());
         }
         else if (!Loop)
-            Destroy(gameObject); 
+            Destroy(gameObject);
     }
 
-    void OnDrawGizmos()  
+    void OnDrawGizmos()
     {
-        DrawPath(pathPoints);  
+        DrawPath(pathPoints);
     }
 
     void DrawPath(Transform[] path) //drawing the path in the Editor
@@ -108,7 +109,7 @@ public class Wave : MonoBehaviour {
         }
     }
 
-    Vector3 Interpolate(Vector3[] path, float t) 
+    Vector3 Interpolate(Vector3[] path, float t)
     {
         int numSections = path.Length - 3;
         int currPt = Mathf.Min(Mathf.FloorToInt(t * numSections), numSections - 1);

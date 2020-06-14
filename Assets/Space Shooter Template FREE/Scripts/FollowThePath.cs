@@ -6,10 +6,11 @@ using System;
 /// <summary>
 /// This script moves the ‘Enemy’ along the defined path.
 /// </summary>
-public class FollowThePath : MonoBehaviour {
-        
-    [HideInInspector] public Transform [] path; //path points which passes the 'Enemy' 
-    [HideInInspector] public float speed; 
+public class FollowThePath : MonoBehaviour
+{
+
+    [HideInInspector] public Transform[] path; //path points which passes the 'Enemy' 
+    [HideInInspector] public float speed;
     [HideInInspector] public bool rotationByPath;   //whether 'Enemy' rotates in path direction or not
     [HideInInspector] public bool loop;         //if loop is true, 'Enemy' returns to the path starting point after completing the path
     float currentPathPercent;               //current percentage of completing the path
@@ -17,7 +18,7 @@ public class FollowThePath : MonoBehaviour {
     [HideInInspector] public bool movingIsActive;   //whether 'Enemy' moves or not
 
     //setting path parameters for the 'Enemy' and sending the 'Enemy' to the path starting point
-    public void SetPath() 
+    public void SetPath()
     {
         currentPathPercent = 0;
         pathPositions = new Vector3[path.Length];       //transform path points to vector3
@@ -49,18 +50,18 @@ public class FollowThePath : MonoBehaviour {
                     currentPathPercent = 0;
                 else
                 {
-                    Destroy(gameObject);           
+                    Destroy(gameObject);
                 }
             }
         }
     }
 
-    Vector3 NewPositionByPath(Vector3 [] pathPos, float percent) 
+    Vector3 NewPositionByPath(Vector3[] pathPos, float percent)
     {
         return Interpolate(CreatePoints(pathPos), currentPathPercent);
     }
 
-    Vector3 Interpolate(Vector3[] path, float t) 
+    Vector3 Interpolate(Vector3[] path, float t)
     {
         int numSections = path.Length - 3;
         int currPt = Mathf.Min(Mathf.FloorToInt(t * numSections), numSections - 1);
@@ -72,7 +73,7 @@ public class FollowThePath : MonoBehaviour {
         return 0.5f * ((-a + 3f * b - 3f * c + d) * (u * u * u) + (2f * a - 5f * b + 4f * c - d) * (u * u) + (-a + c) * u + 2f * b);
     }
 
-    Vector3[] CreatePoints(Vector3[] path) 
+    Vector3[] CreatePoints(Vector3[] path)
     {
         Vector3[] pathPositions;
         Vector3[] newPathPos;

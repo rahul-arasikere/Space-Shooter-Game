@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
 
     public void Respawn()
     {
+        PlayerShooting.instance.weaponPower = 1;
         transform.position = startPosition;
     }
 

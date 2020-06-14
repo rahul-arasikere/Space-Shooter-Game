@@ -52,4 +52,9 @@ public class GameController : Singleton<GameController>
         startCanvas.gameObject.SetActive(!value);
         Time.timeScale = (value) ? 1 : 0;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
