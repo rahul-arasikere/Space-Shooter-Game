@@ -11,25 +11,37 @@ public class Player : MonoBehaviour
 {
     public GameObject destructionFX;
 
-    public static Player instance; 
+    public static Player instance;
 
+    private Vector3 startPosition;
+
+    public void start()
+    {
+        startPosition = transform.position;
+    }
     private void Awake()
     {
-        if (instance == null) 
+        if (instance == null)
             instance = this;
     }
 
     //method for damage proceccing by 'Player'
-    public void GetDamage(int damage)   
+    public void GetDamage(int damage)
     {
         Destruction();
-    }    
+    }
+
+    public void Respawn()
+    {
+        transform.position = startPosition;
+    }
 
     //'Player's' destruction procedure
     void Destruction()
     {
         Instantiate(destructionFX, transform.position, Quaternion.identity); //generating destruction visual effect and destroying the 'Player' object
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        PlayerController.Instance.PlayerKilled();
     }
 }
 
