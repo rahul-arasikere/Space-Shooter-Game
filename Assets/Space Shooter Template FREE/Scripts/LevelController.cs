@@ -11,6 +11,12 @@ public class EnemyWaves
 
     [Tooltip("Enemy wave's prefab")]
     public GameObject wave;
+
+    public EnemyWaves(float time, GameObject w)
+    {
+        timeToStart = time;
+        wave = w;
+    }
 }
 
 #endregion
@@ -19,7 +25,7 @@ public class LevelController : MonoBehaviour
 {
 
     //Serializable classes implements
-    public EnemyWaves[] enemyWaves;
+    List<EnemyWaves> enemyWaves = new List<EnemyWaves>();
 
     public GameObject powerUp;
     public float timeForNewPowerup;
@@ -27,14 +33,29 @@ public class LevelController : MonoBehaviour
     public float timeBetweenPlanets;
     public float planetsSpeed;
     List<GameObject> planetsList = new List<GameObject>();
-
+    public GameObject[] waves;
+    public float wavesToSpawn = 5;
     Camera mainCamera;
+    public void LevelGenerator()
+    {
+        enemyWaves = new List<EnemyWaves>();
+        int time = 0;
+        for (int i = 0; i < wavesToSpawn; i++, time += 8)
+        {
+            enemyWaves.Add(new EnemyWaves(time, waves[Random.Range(0, waves.Length)]));
+        }
+    }
 
+    public void SpawnNumberMultiplier()
+    {
+        wavesToSpawn *= 1.25f;
+    }
     private void Start()
     {
         mainCamera = Camera.main;
+        LevelGenerator();
         //for each element in 'enemyWaves' array creating coroutine which generates the wave
-        for (int i = 0; i < enemyWaves.Length; i++)
+        for (int i = 0; i < enemyWaves.Count; i++)
         {
             StartCoroutine(CreateEnemyWave(enemyWaves[i].timeToStart, enemyWaves[i].wave));
         }
