@@ -26,7 +26,7 @@ public class LevelController : MonoBehaviour
 
     //Serializable classes implements
     List<EnemyWaves> enemyWaves = new List<EnemyWaves>();
-
+    public int currentLevel = 1;
     public GameObject powerUp;
     public float timeForNewPowerup;
     public GameObject[] planets;
@@ -35,6 +35,7 @@ public class LevelController : MonoBehaviour
     List<GameObject> planetsList = new List<GameObject>();
     public GameObject[] waves;
     public float wavesToSpawn = 5;
+    public float timeBetweenWaves = 8;
     Camera mainCamera;
     public void LevelGenerator()
     {
@@ -46,13 +47,20 @@ public class LevelController : MonoBehaviour
         }
     }
 
-    public void SpawnNumberMultiplier()
+    public void LevelComplete()
     {
         wavesToSpawn *= 1.25f;
+        timeBetweenWaves *= 0.95f;
+        timeForNewPowerup *= 0.85f;
     }
+
     private void Start()
     {
         mainCamera = Camera.main;
+        LevelStart();
+    }
+    private void LevelStart()
+    {
         LevelGenerator();
         //for each element in 'enemyWaves' array creating coroutine which generates the wave
         for (int i = 0; i < enemyWaves.Count; i++)
@@ -62,7 +70,6 @@ public class LevelController : MonoBehaviour
         StartCoroutine(PowerupBonusCreation());
         StartCoroutine(PlanetsCreation());
     }
-
     //Create a new wave after a delay
     IEnumerator CreateEnemyWave(float delay, GameObject Wave)
     {

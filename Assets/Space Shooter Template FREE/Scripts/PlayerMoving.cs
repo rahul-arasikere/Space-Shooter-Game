@@ -74,7 +74,7 @@ public class PlayerMoving : MonoBehaviour
             {
                 x = borders.minX;
             }
-            else if (transform.position.x < (borders.minX + borders.minXOffset))
+            else if (transform.position.x < (borders.minX - borders.minXOffset))
             {
                 x = borders.maxX;
             }

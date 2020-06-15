@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     public void start()
     {
-        startPosition = transform.position;
+        startPosition = gameObject.transform.position;
     }
     private void Awake()
     {
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     public void Respawn()
     {
         PlayerShooting.instance.weaponPower = 1;
-        transform.position = startPosition;
+        gameObject.transform.position = startPosition;
     }
 
     //'Player's' destruction procedure
