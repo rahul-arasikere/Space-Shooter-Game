@@ -1,25 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : Singleton<PlayerController>
 {
     public int maxLives = 3;
     private int _currentLife;
+    public Text LiveText;
 
-    public void start()
+    public void Start()
     {
         _currentLife = maxLives;
+        LiveText.text = _currentLife.ToString();
+
     }
     public void PlayerKilled()
     {
-        _currentLife--;
+        _currentLife -= 1;
         if (_currentLife == 0)
         {
             GameController.Instance.GameOver();
         }
         else
         {
+            LiveText.text = _currentLife.ToString();
             Player.instance.Respawn();
         }
     }
