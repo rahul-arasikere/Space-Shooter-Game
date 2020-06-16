@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : Singleton<GameController>
 {
@@ -10,12 +11,16 @@ public class GameController : Singleton<GameController>
     public Canvas gameOverCanvas;
     public Player player;
     public LevelController levelController;
+    public Text scoreText;
+    private long score;
     // Start is called before the first frame update
     void Start()
     {
         ResetUI();
-        startCanvas.gameObject.SetActive(true);
         ActivateGame(false);
+        startCanvas.gameObject.SetActive(true);
+        score = 0;
+        scoreText.text = score.ToString();
     }
 
     public void ResetUI()
@@ -40,19 +45,24 @@ public class GameController : Singleton<GameController>
 
     public void GameOver()
     {
-        gameOverCanvas.gameObject.SetActive(true);
         ActivateGame(false);
+        gameOverCanvas.gameObject.SetActive(true);
     }
 
     public void ActivateGame(bool value)
     {
         player.gameObject.SetActive(value);
         levelController.gameObject.SetActive(value);
+        ResetUI();
         gameCanvas.gameObject.SetActive(value);
-        startCanvas.gameObject.SetActive(!value);
         Time.timeScale = (value) ? 1 : 0;
     }
 
+    public void IncrementScore(int points)
+    {
+        score += points;
+        scoreText.text = score.ToString();
+    }
     public void QuitGame()
     {
         Application.Quit();

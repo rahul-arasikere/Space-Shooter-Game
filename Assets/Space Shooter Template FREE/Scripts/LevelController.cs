@@ -54,7 +54,7 @@ public class LevelController : MonoBehaviour
         timeForNewPowerup *= 0.85f;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         mainCamera = Camera.main;
         LevelStart();

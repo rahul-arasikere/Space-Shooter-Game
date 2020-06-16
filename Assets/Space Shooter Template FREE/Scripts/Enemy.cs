@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Enemy : MonoBehaviour
 {
+    public int points = 50;
 
     #region FIELDS
     [Tooltip("Health points in integer")]
@@ -67,16 +68,6 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(destructionVFX, transform.position, Quaternion.identity);
         Destroy(gameObject);
-        switch (size)
-        {
-            case 2:
-                break;
-
-            case 3:
-                break;
-                
-            default:
-                break;
-        }
+        GameController.Instance.IncrementScore(points);
     }
 }

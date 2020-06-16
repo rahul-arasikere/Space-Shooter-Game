@@ -25,7 +25,15 @@ public class PlayerController : Singleton<PlayerController>
         else
         {
             LiveText.text = _currentLife.ToString();
-            Player.instance.Respawn();
+            StartCoroutine(DoRespawnCoroutine());
         }
+    }
+
+    private IEnumerator DoRespawnCoroutine()
+    {
+        Player.instance.gameObject.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        Player.instance.gameObject.SetActive(true);
+        Player.instance.Respawn();
     }
 }

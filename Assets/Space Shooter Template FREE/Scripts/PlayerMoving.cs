@@ -41,22 +41,29 @@ public class PlayerMoving : MonoBehaviour
         if (controlIsActive)
         {
 #if UNITY_STANDALONE || UNITY_EDITOR    //if the current platform is not mobile, set pc settings
-            if (Input.GetKey(KeyCode.A))
-            {
-                transform.Translate(x: -speed * Time.deltaTime, y: 0, z: 0);
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                transform.Translate(x: speed * Time.deltaTime, y: 0, z: 0);
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                transform.Translate(x: 0, y: -speed * Time.deltaTime, z: 0);
-            }
-            if (Input.GetKey(KeyCode.W))
-            {
-                transform.Translate(x: 0, y: speed * Time.deltaTime, z: 0);
-            }
+            // if (Input.GetKey(KeyCode.A))
+            // {
+            //     transform.Translate(x: -speed * Time.deltaTime, y: 0, z: 0);
+            // }
+            // if (Input.GetKey(KeyCode.D))
+            // {
+            //     transform.Translate(x: speed * Time.deltaTime, y: 0, z: 0);
+            // }
+            // if (Input.GetKey(KeyCode.S))
+            // {
+            //     transform.Translate(x: 0, y: -speed * Time.deltaTime, z: 0);
+            // }
+            // if (Input.GetKey(KeyCode.W))
+            // {
+            //     transform.Translate(x: 0, y: speed * Time.deltaTime, z: 0);
+            // }
+            float horiz = Input.GetAxis("Horizontal");
+            float vert = Input.GetAxis("Vertical");
+            transform.Translate(
+                horiz * speed * Time.deltaTime,
+                vert * speed * Time.deltaTime,
+                0
+            );
 #endif
 
 #if UNITY_IOS || UNITY_ANDROID //if current platform is mobile, 
@@ -68,6 +75,15 @@ public class PlayerMoving : MonoBehaviour
                 touchPosition.z = transform.position.z;
                 transform.position = Vector3.MoveTowards(transform.position, touchPosition, 30 * Time.deltaTime);
             }
+
+            float horiz = Input.acceleration.x;
+            float vert = Input.acceleration.y;
+            transform.Translate(
+            horiz*speed*Time.deltaTime,
+            vert*speed*Time.deltaTime,
+            0
+        );
+
 #endif
             float x;
             if (transform.position.x > (borders.maxX + borders.maxXOffset))

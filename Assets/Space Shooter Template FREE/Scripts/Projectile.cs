@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-
+    public int points = 30;
     [Tooltip("Damage which a projectile deals to another object. Integer")]
     public int damage;
 
@@ -42,6 +42,7 @@ public class Projectile : MonoBehaviour
     void Destruction()
     {
         Destroy(gameObject);
+        GameController.Instance.IncrementScore(points);
     }
 }
 

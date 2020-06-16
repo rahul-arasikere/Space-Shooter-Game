@@ -34,7 +34,24 @@ public class Player : MonoBehaviour
     public void Respawn()
     {
         PlayerShooting.instance.weaponPower = 1;
+        transform.position = startPosition;
+    }
+    
+
+    public void DoRespawn()
+    {
+        // PlayerShooting.instance.weaponPower = 1;
+        // gameObject.transform.position = startPosition;
+        // gameObject.SetActive(true);
+    }
+
+    IEnumerator DoRespawnCoroutine()
+    {
+        gameObject.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        PlayerShooting.instance.weaponPower = 1;
         gameObject.transform.position = startPosition;
+        gameObject.SetActive(true);
     }
 
     //'Player's' destruction procedure
