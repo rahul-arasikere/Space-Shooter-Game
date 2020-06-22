@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 #region Serializable classes
 [System.Serializable]
@@ -36,6 +37,9 @@ public class LevelController : MonoBehaviour
     public GameObject[] waves;
     public float wavesToSpawn = 5;
     public float timeBetweenWaves = 8;
+
+    public GameObject LevelCompleteCanvas;
+    public Text levelDisplay;
     Camera mainCamera;
     public void LevelGenerator()
     {
@@ -57,19 +61,35 @@ public class LevelController : MonoBehaviour
     private void OnEnable()
     {
         mainCamera = Camera.main;
+        StartCoroutine(PowerupBonusCreation());
+        StartCoroutine(PlanetsCreation());
         LevelStart();
     }
     private void LevelStart()
     {
+        int i;
         LevelGenerator();
         //for each element in 'enemyWaves' array creating coroutine which generates the wave
-        for (int i = 0; i < enemyWaves.Count; i++)
+        for (i = 0; i < enemyWaves.Count; i++)
         {
             StartCoroutine(CreateEnemyWave(enemyWaves[i].timeToStart, enemyWaves[i].wave));
         }
-        StartCoroutine(PowerupBonusCreation());
-        StartCoroutine(PlanetsCreation());
+        StartCoroutine(LevelWinCheck(enemyWaves[i].timeToStart + 8));
     }
+
+    IEnumerator LevelWinCheck(float delay)
+    {
+        if (delay != 0)
+            yield return new WaitForSeconds(delay);
+        currentLevel += 1;
+        levelDisplay.text = "Level " + currentLevel + " Starting";
+        LevelCompleteCanvas.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        LevelCompleteCanvas.SetActive(false);
+        LevelComplete();
+        LevelStart();
+    }
+
     //Create a new wave after a delay
     IEnumerator CreateEnemyWave(float delay, GameObject Wave)
     {

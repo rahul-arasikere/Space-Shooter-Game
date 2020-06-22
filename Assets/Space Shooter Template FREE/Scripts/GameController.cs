@@ -11,6 +11,8 @@ public class GameController : Singleton<GameController>
     public Canvas gameOverCanvas;
     public Player player;
     public LevelController levelController;
+    public HighScoreController highScoreController;
+    public GameObject highScoreText;
     public Text scoreText;
     private long score;
     // Start is called before the first frame update
@@ -47,6 +49,14 @@ public class GameController : Singleton<GameController>
     {
         ActivateGame(false);
         gameOverCanvas.gameObject.SetActive(true);
+        if (highScoreController.AddHighScore(score))
+        {
+            highScoreText.gameObject.SetActive(true);
+        }
+        else
+        {
+            highScoreText.gameObject.SetActive(false);
+        }
     }
 
     public void ActivateGame(bool value)
