@@ -24,12 +24,13 @@ jobs:
           - StandaloneWindows # Build a Windows standalone.
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
           - StandaloneLinux64 # Build a Linux 64-bit standalone.
-          - Android # Build an Android .apk standalone app.
           - WebGL # WebGL.
     steps:
+      - name: Checkout Branch
       - uses: actions/checkout@v2
         with:
           lfs: true
+      - name: Load Cache
       - uses: actions/cache@v1.1.0
         with:
           path: ${{ matrix.projectPath }}/Library
@@ -37,12 +38,14 @@ jobs:
           restore-keys: |
             Library-${{ matrix.projectPath }}-
             Library-
+      - name: Build ${{ matrix.targetPlatform }} on ${{matrix.unityVersion}}
       - uses: webbertakken/unity-builder@v1.0
         with:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
+      - name: Save Zip
       - uses: actions/upload-artifact@v1
         with:
-          name: Build
-          path: build
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}/${{ matrix.targetPlatform }}
